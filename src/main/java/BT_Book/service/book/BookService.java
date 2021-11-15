@@ -93,6 +93,11 @@ public class BookService implements IBookService{
 
     @Override
     public void update(int id, Book book) {
+
+    }
+
+    @Override
+    public void update(int id, Book book,int[] categories) {
         try {
             PreparedStatement preparedStatement=connection.prepareStatement("update book set name=?,price=?,description=? where id=?;");
             preparedStatement.setString(1,book.getName());
@@ -100,6 +105,17 @@ public class BookService implements IBookService{
             preparedStatement.setString(3,book.getDescription());
             preparedStatement.setInt(4,id);
             preparedStatement.executeUpdate();
+            PreparedStatement preparedStatement1= connection.prepareStatement("delete from book_category where id_book=?;");
+            preparedStatement1.setInt(1,id);
+            preparedStatement1.executeUpdate();
+            PreparedStatement  preparedStatement2=connection.prepareStatement("insert into book_category(id_book,id_category) value (?,?);");
+
+            for (int category_id: categories
+                 ) {
+                preparedStatement2.setInt(1,id);
+                preparedStatement2.setInt(2,category_id);
+                preparedStatement2.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

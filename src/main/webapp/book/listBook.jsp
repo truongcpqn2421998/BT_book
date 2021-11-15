@@ -22,7 +22,7 @@
     <table>
         <caption>List of book</caption>
         <tr>
-            <th>id</th>
+            <th>id</th>X
             <th>name</th>
             <th>price</th>
             <th>description</th>

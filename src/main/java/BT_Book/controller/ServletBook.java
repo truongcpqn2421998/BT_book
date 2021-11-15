@@ -42,8 +42,10 @@ public class ServletBook extends HttpServlet {
 
     private void editForm(HttpServletRequest request, HttpServletResponse response) {
         int id=Integer.parseInt(request.getParameter("id"));
+        List<Category> categories=categoryService.findAll();
         Book book=bookService.findById(id);
         request.setAttribute("book",book);
+        request.setAttribute("categories",categories);
         RequestDispatcher dispatcher=request.getRequestDispatcher("book/edit.jsp");
         try {
             dispatcher.forward(request,response);
@@ -98,8 +100,6 @@ public class ServletBook extends HttpServlet {
             case "create":
                 createBook(request,response);
                 break;
-            case "delete":
-                break;
             case "edit":
                 editBook(request,response);
                 break;
@@ -109,6 +109,7 @@ public class ServletBook extends HttpServlet {
     }
 
     private void editBook(HttpServletRequest request, HttpServletResponse response) {
+        int id=Integer.parseInt(request.getParameter("id"));
         String name =request.getParameter("name");
         double price=Double.parseDouble(request.getParameter("price"));
         String description=request.getParameter("description");
@@ -118,7 +119,12 @@ public class ServletBook extends HttpServlet {
             categories[i]=Integer.parseInt(categoriesStr[i]);
         }
         Book book=new Book(name,price,description);
-
+        bookService.update(id,book,categories);
+        try {
+            response.sendRedirect("/books");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createBook(HttpServletRequest request, HttpServletResponse response) {

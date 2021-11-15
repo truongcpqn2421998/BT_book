@@ -5,4 +5,5 @@ import BT_Book.service.IService;
 
 public interface IBookService extends IService<Book> {
     void save(Book book ,int[] categories);
-}
+    public void update(int id, Book book,int[] categories) ;
+    }
