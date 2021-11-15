@@ -19,10 +19,10 @@
     </h2>
 </center>
 <div align="center">
-    <table>
+    <table border="1px">
         <caption>List of book</caption>
         <tr>
-            <th>id</th>X
+            <th>id</th>
             <th>name</th>
             <th>price</th>
             <th>description</th>
@@ -44,7 +44,7 @@
                     <c:out value="${book.description}"/>
                 </td>
                 <td><c:forEach var="category" items="${book.categoryList}">
-                    <c:out value="${category.name}"/>
+                    <c:out value="${category.name}"/><br>
                 </c:forEach> </td>
                 <td>
                     <a href="books?action=edit&id=${book.id}">edit</a>
